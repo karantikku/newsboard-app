@@ -1,7 +1,7 @@
 {
-  "name": "indecision-app",
+  "name": "newsboard-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
   "author": "Karan Tikku",
   "license": "MIT",
   "scripts": {
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.2.0",
+    "axios": "0.18.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
@@ -18,6 +19,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
+    "fetch": "1.1.0",
     "live-server": "^1.2.0",
     "material-ui": "^0.20.2",
     "node-sass": "^4.9.3",
@@ -31,5 +33,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
 }

@@ -1,29 +1,17 @@
-import React from 'react';
+import React from "react";
 
-const NewsItem = (props) => (
+const NewsItem = props => (
+  <div>
     <div>
-        <div>
-            <h3>Stephen Hawking has died</h3>
-            <div>
-                <div>
-                    6015 points
-                </div>
-                <div>
-                    Cogito
-                </div>
-                <div>
-                    7 months
-                </div>
-                <div>
-                    436 Comments
-                </div>
-                <div>
-                    (http://www.bbc.com/news/uk-43396008)
-                </div>
-            </div>
-        </div>
+      <h3>{props.title}</h3>
+      <div>
+        <div>{props.points}</div>
+        <div>{props.author}</div>
+        <div>{props.url}</div>
+        <div>{props.hours_ago} hour(s) ago</div>
+      </div>
     </div>
-
+  </div>
 );
 
 export default NewsItem;
