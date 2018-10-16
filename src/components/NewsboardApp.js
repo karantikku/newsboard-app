@@ -2,6 +2,7 @@ import React from "react";
 import fetch from "node-fetch";
 import Header from "./Header";
 import NewsList from "./NewsList";
+import SortBar from "./SortBar";
 
 export class NewsboardApp extends React.Component {
   constructor(props) {
@@ -10,9 +11,12 @@ export class NewsboardApp extends React.Component {
       news: []
     };
   }
+  onSort(sortBy) {
+    console.log(sortBy);
+  }
   componentDidMount() {
     this.setState({ isLoading: true });
-    fetch("https://hn.algolia.com/api/v1/search?tags=front_page")
+    fetch("https://hn.algolia.com/api/v1/search?query=&tags=story&page=0")
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -40,6 +44,7 @@ export class NewsboardApp extends React.Component {
     return (
       <div>
         <Header />
+        <SortBar onSort={this.onSort} />
         <NewsList news={this.state.news} />
       </div>
     );

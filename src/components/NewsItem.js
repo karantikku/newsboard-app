@@ -8,6 +8,7 @@ const NewsItem = props => (
         <div>{props.points}</div>
         <div>{props.author}</div>
         <div>{props.url}</div>
+        <div>{props.hours_ago} hour(s) ago</div>
       </div>
     </div>
   </div>
