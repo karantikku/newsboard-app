@@ -9,6 +9,13 @@ const NewsItem = props => (
         <div>{props.author}</div>
         <div>{props.url}</div>
         <div>{props.hours_ago} hour(s) ago</div>
+        <div>
+          <a
+            href={"https://news.ycombinator.com/item?id=" + `${props.objectID}`}
+          >
+            {props.num_comments}
+          </a>
+        </div>
       </div>
     </div>
   </div>
