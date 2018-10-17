@@ -7,13 +7,45 @@ import SortBar from "./SortBar";
 export class NewsboardApp extends React.Component {
   constructor(props) {
     super(props);
+    this.onSort = this.onSort.bind(this);
+    this.compareValues = this.compareValues.bind(this);
     this.state = {
       news: []
     };
   }
-  onSort(sortBy) {
-    console.log(sortBy);
+ compareValues(key, order='desc') {
+    return function(a, b) {
+      if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          return 0; 
+      }
+      let comparison = 0;
+      if (a[key] > b[key]) {
+        comparison = -1;
+      } else if (a[key] < b[key]) {
+        comparison = 1;
+      }
+      return comparison;
+    };
   }
+  onSort(sortBy) {
+    if(sortBy) {
+      if(sortBy === "Date") {
+        let prevState = this.state;
+        const news = prevState.news.sort(this.compareValues('hours_ago'));
+        this.setState(() => ({
+          news: news
+        }));
+      }
+      else if(sortBy === 'Popularity') {
+        let prevState = this.state;
+        const news = prevState.news.sort(this.compareValues('points'));
+        this.setState(() => ({
+          news: news
+        }));
+      }
+        
+      } 
+  } 
   componentDidMount() {
     this.setState({ isLoading: true });
     fetch("https://hn.algolia.com/api/v1/search?query=&tags=story&page=0")
