@@ -13,14 +13,15 @@ export class NewsboardApp extends React.Component {
     this.state = {
       news: [],
       isLoading: false,
-      searchBarQuery: ''
+      searchBarQuery: ""
     };
   }
- compareValues(key, order='desc') {
+  compareValues(key, order = "desc") {
     return function(a, b) {
-      if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-          return 0; 
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        return 0;
       }
+
       let comparison = 0;
       if (a[key] > b[key]) {
         comparison = -1;
@@ -31,29 +32,29 @@ export class NewsboardApp extends React.Component {
     };
   }
   onSort(sortBy) {
-    if(sortBy) {
-      if(sortBy === "Date") {
+    if (sortBy) {
+      if (sortBy === "Date") {
         let prevState = this.state;
-        const news = prevState.news.sort(this.compareValues('hours_ago'));
+        const news = prevState.news.sort(this.compareValues("created_at"));
+        this.setState(() => ({
+          news: news
+        }));
+      } else if (sortBy === "Popularity") {
+        let prevState = this.state;
+        const news = prevState.news.sort(this.compareValues("points"));
         this.setState(() => ({
           news: news
         }));
       }
-      else if(sortBy === 'Popularity') {
-        let prevState = this.state;
-        const news = prevState.news.sort(this.compareValues('points'));
-        this.setState(() => ({
-          news: news
-        }));
-      }
-        
-      } 
-  } 
+    }
+  }
   onSearch(queryString) {
-    this.setState({ 
-      searchBarQuery: queryString });
-      console.log(" http://hn.algolia.com/api/v1/search?query="+`${this.state.searchBarQuery}`+"&tags=story")
-    fetch("http://hn.algolia.com/api/v1/search?query="+`${this.state.searchBarQuery}`+"&tags=story")
+    queryString = encodeURIComponent(queryString.trim());
+    fetch(
+      "https://hn.algolia.com/api/v1/search?query=" +
+        `${queryString}` +
+        "&tags=story"
+    )
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -70,22 +71,25 @@ export class NewsboardApp extends React.Component {
       .catch(error => this.setState({ error, isLoading: false }));
   }
   componentDidMount() {
-    this.setState({ isLoading: true });
-    fetch("https://hn.algolia.com/api/v1/search?query=&tags=story&page=0")
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Something went wrong");
-        }
-      })
-      .then(data => {
-        this.setState(prevState => ({
-          news: data.hits,
-          isLoading: false
-        }));
-      })
-      .catch(error => this.setState({ error, isLoading: false }));
+    if (this.state.searchBarQuery === "") {
+      this.setState({ isLoading: true });
+      fetch("https://hn.algolia.com/api/v1/search?query=&tags=story&page=0")
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Something went wrong");
+          }
+        })
+        .then(data => {
+          console.log(data.hits);
+          this.setState(prevState => ({
+            news: data.hits,
+            isLoading: false
+          }));
+        })
+        .catch(error => this.setState({ error, isLoading: false }));
+    }
   }
   render() {
     const isLoading = this.state.isLoading;
