@@ -11,7 +11,9 @@ export class NewsboardApp extends React.Component {
     this.compareValues = this.compareValues.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.state = {
-      news: []
+      news: [],
+      isLoading: false,
+      searchBarQuery: ''
     };
   }
  compareValues(key, order='desc') {
@@ -48,8 +50,10 @@ export class NewsboardApp extends React.Component {
       } 
   } 
   onSearch(queryString) {
-    this.setState({ isLoading: true });
-    fetch(" http://hn.algolia.com/api/v1/search?query=`${queryString}`&tags=story")
+    this.setState({ 
+      searchBarQuery: queryString });
+      console.log(" http://hn.algolia.com/api/v1/search?query="+`${this.state.searchBarQuery}`+"&tags=story")
+    fetch("http://hn.algolia.com/api/v1/search?query="+`${this.state.searchBarQuery}`+"&tags=story")
       .then(response => {
         if (response.ok) {
           return response.json();

@@ -8,7 +8,7 @@ const Header = (props) => (
        <div>
         <input type="text"
         placeholder="Search"
-        onKeyPress={e => props.onSearch(e.target.value)}>
+        onChange={e => props.onSearch(e.target.value)}>
         </input>
         by algolia
        </div>
