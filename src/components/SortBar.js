@@ -7,8 +7,8 @@ class SortBar extends React.Component {
       <div>
         Sort By :
         <NativeSelect onChange={event => this.props.onSort(event.target.value)}>
-          <option value={"Date"}>Date</option>
           <option value={"Popularity"}>Popularity</option>
+          <option value={"Date"}>Date</option>
         </NativeSelect>
       </div>
     );
